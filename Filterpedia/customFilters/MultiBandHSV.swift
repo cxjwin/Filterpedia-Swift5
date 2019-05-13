@@ -79,7 +79,7 @@ class MultiBandHSV: CIFilter
         shaderString += "return vec4(hsv2rgb(hsv), 1.0);"
         shaderString += "}"
 
-        return CIColorKernel(string: shaderString)!
+        return CIColorKernel(source: shaderString)!
     }()
     
     var inputImage: CIImage?
@@ -93,7 +93,7 @@ class MultiBandHSV: CIFilter
     var inputPurpleShift = CIVector(x: 0, y: 1, z: 1)
     var inputMagentaShift = CIVector(x: 0, y: 1, z: 1)
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "MultiBandHSV",
@@ -168,7 +168,7 @@ class MultiBandHSV: CIFilter
             return nil
         }
         
-        return multiBandHSVKernel.applyWithExtent(inputImage.extent,
+        return multiBandHSVKernel.apply(extent: inputImage.extent,
             arguments: [inputImage,
                 inputRedShift,
                 inputOrangeShift,

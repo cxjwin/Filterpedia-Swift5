@@ -18,7 +18,7 @@ class CausticNoise: CIFilter
   var inputWidth: CGFloat = 640
   var inputHeight: CGFloat = 640
   
-  override var attributes: [String : AnyObject]
+  override var attributes: [String : Any]
   {
     return [
       kCIAttributeFilterDisplayName: "Caustic Noise",
@@ -59,7 +59,7 @@ class CausticNoise: CIFilter
   }
   
   let causticNoiseKernel = CIColorKernel(
-    string: "kernel vec4 mainImage(float time, float tileSize) " +
+    source: "kernel vec4 mainImage(float time, float tileSize) " +
       "{ " +
       "    vec2 uv = destCoord() / tileSize; " +
       
@@ -93,7 +93,7 @@ class CausticNoise: CIFilter
     
     let extent = CGRect(x: 0, y: 0, width: inputWidth, height: inputHeight)
     
-    return causticNoiseKernel.applyWithExtent(extent, arguments: [inputTime, inputTileSize])
+    return causticNoiseKernel.apply(extent: extent, arguments: [inputTime, inputTileSize])
   }
 }
 
@@ -109,7 +109,7 @@ class CausticRefraction: CIFilter
     var inputTileSize: CGFloat = 640
     var inputSoftening: CGFloat = 3
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Caustic Refraction",
@@ -184,7 +184,7 @@ class CausticRefraction: CIFilter
     override var outputImage: CIImage!
     {
       guard let inputImage = inputImage,
-        refractingKernel = refractingKernel else
+        let refractingKernel = refractingKernel else
       {
         return nil
       }
@@ -193,20 +193,20 @@ class CausticRefraction: CIFilter
       
       let refractingImage = CIFilter(
           name: "CausticNoise",
-          withInputParameters: ["inputTime": inputTime, "inputTileSize": inputTileSize])?.outputImage!
-        .imageByApplyingFilter(
-          "CIGaussianBlur",
-          withInputParameters: [kCIInputRadiusKey: inputSoftening])
+          parameters: ["inputTime": inputTime, "inputTileSize": inputTileSize])?.outputImage!
+        .applyingFilter(
+            "CIGaussianBlur",
+            parameters: [kCIInputRadiusKey: inputSoftening])
       
       let arguments = [
         inputImage,
         refractingImage!,
         inputRefractiveIndex,
         inputLensScale,
-        inputLightingAmount]
+        inputLightingAmount] as [Any]
       
-      return refractingKernel.applyWithExtent(
-        extent,
+        return refractingKernel.apply(
+            extent: extent,
         roiCallback:
         {
           (index, rect) in
@@ -216,7 +216,7 @@ class CausticRefraction: CIFilter
     }
   
     let refractingKernel = CIKernel(
-      string: "float lumaAtOffset(sampler source, vec2 origin, vec2 offset)" +
+        source: "float lumaAtOffset(sampler source, vec2 origin, vec2 offset)" +
         "{" +
         " vec3 pixel = sample(source, samplerTransform(source, origin + offset)).rgb;" +
         " float luma = dot(pixel, vec3(0.2126, 0.7152, 0.0722));" +

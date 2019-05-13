@@ -31,10 +31,10 @@ class HistogramDisplay: UIView
         bitsPerPixel: 32,
         colorSpace: nil,
         bitmapInfo: CGBitmapInfo(
-            rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue),
+            rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
         version: 0,
         decode: nil,
-        renderingIntent: .RenderingIntentDefault)
+        renderingIntent: CGColorRenderingIntent.defaultIntent)
     
     func histogramCalculation(imageRef: CGImage) -> (red: [UInt], green: [UInt], blue: [UInt])
     {
@@ -47,41 +47,41 @@ class HistogramDisplay: UIView
             imageRef,
             UInt32(kvImageNoFlags))
 
-        let red = [UInt](count: 256, repeatedValue: 0)
-        let green = [UInt](count: 256, repeatedValue: 0)
-        let blue = [UInt](count: 256, repeatedValue: 0)
-        let alpha = [UInt](count: 256, repeatedValue: 0)
+        let red: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let green: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let blue: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let alpha: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
         
-        let redPtr = UnsafeMutablePointer<vImagePixelCount>(red)
-        let greenPtr = UnsafeMutablePointer<vImagePixelCount>(green)
-        let bluePtr = UnsafeMutablePointer<vImagePixelCount>(blue)
-        let alphaPtr = UnsafeMutablePointer<vImagePixelCount>(alpha)
+        let redPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: red)
+        let greenPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: green)
+        let bluePtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: blue)
+        let alphaPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: alpha)
         
         let rgba = [redPtr, greenPtr, bluePtr, alphaPtr]
-
-        let histogram = UnsafeMutablePointer<UnsafeMutablePointer<vImagePixelCount>>(rgba)
+        let p_rgba: UnsafePointer<UnsafeMutablePointer<vImagePixelCount>?> = UnsafePointer<UnsafeMutablePointer<vImagePixelCount>?>(rgba)
+        let histogram = UnsafeMutablePointer<UnsafeMutablePointer<vImagePixelCount>?>(mutating: p_rgba)
         
         vImageHistogramCalculation_ARGB8888(&inBuffer, histogram, UInt32(kvImageNoFlags))
 
         free(inBuffer.data)
         
-        return (red, green, blue)
+        return (red!, green!, blue!)
     }
     
     let scaleLabel: UILabel =
     {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFontOfSize(22, weight: UIFontWeightRegular)
-        label.textAlignment = .Right
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 22, weight: UIFont.Weight.regular)
+        label.textAlignment = .right
         label.text = "100%"
         label.alpha = 0
         
         return label
     }()
     
-    let redLayer = HistogramDisplay.createLayerForColor(UIColor.redColor())
-    let greenLayer = HistogramDisplay.createLayerForColor(UIColor.greenColor())
-    let blueLayer = HistogramDisplay.createLayerForColor(UIColor.blueColor())
+    let redLayer = HistogramDisplay.createLayerForColor(color: UIColor.red)
+    let greenLayer = HistogramDisplay.createLayerForColor(color: UIColor.green)
+    let blueLayer = HistogramDisplay.createLayerForColor(color: UIColor.blue)
     
     var scale: CGFloat = 1
     {
@@ -96,10 +96,10 @@ class HistogramDisplay: UIView
     {
         let layer = CAShapeLayer()
         
-        layer.strokeColor = color.CGColor
-        layer.fillColor = color.colorWithAlphaComponent(0.5).CGColor
+        layer.strokeColor = color.cgColor
+        layer.fillColor = color.withAlphaComponent(0.5).cgColor
         layer.masksToBounds = true
-        layer.lineJoin = kCALineJoinRound
+        layer.lineJoin = CAShapeLayerLineJoin.round
         
         return layer
     }
@@ -108,8 +108,8 @@ class HistogramDisplay: UIView
     {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.lightGrayColor()
-        layer.borderColor = UIColor.darkGrayColor().CGColor
+        backgroundColor = UIColor.lightGray
+        layer.borderColor = UIColor.darkGray.cgColor
         layer.borderWidth = 1
         
         layer.addSublayer(redLayer)
@@ -142,33 +142,33 @@ class HistogramDisplay: UIView
             x: 0,
             y: 0,
             width: frame.width,
-            height: scaleLabel.intrinsicContentSize().height)
+            height: scaleLabel.intrinsicContentSize.height)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        UIView.animateWithDuration(0.25)
+        UIView.animate(withDuration: 0.25)
         {
             self.scaleLabel.alpha = 1
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         guard let touch = touches.first else
         {
             return
         }
       
-        let direction = touch.locationInView(self).y - touch.previousLocationInView(self).y
+        let direction = touch.location(in: self).y - touch.previousLocation(in: self).y
         
         scale -= direction / 20
         drawHistogram()
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        UIView.animateWithDuration(0.25)
+        UIView.animate(withDuration: 0.25)
         {
             self.scaleLabel.alpha = 0
         }
@@ -184,24 +184,24 @@ class HistogramDisplay: UIView
             return
         }
         
-        let histogram = histogramCalculation(imageRef)
+        let histogram = histogramCalculation(imageRef: imageRef)
         
         let maximum = max(
-            histogram.red.maxElement() ?? 0,
-            histogram.green.maxElement() ?? 0,
-            histogram.blue.maxElement() ?? 0)
+            histogram.red.max() ?? 0,
+            histogram.green.max() ?? 0,
+            histogram.blue.max() ?? 0)
         
-        drawChannel(histogram.red, maximum: maximum, layer: redLayer)
-        drawChannel(histogram.green, maximum: maximum, layer: greenLayer)
-        drawChannel(histogram.blue, maximum: maximum, layer: blueLayer)
+        drawChannel(data: histogram.red, maximum: maximum, layer: redLayer)
+        drawChannel(data: histogram.green, maximum: maximum, layer: greenLayer)
+        drawChannel(data: histogram.blue, maximum: maximum, layer: blueLayer)
     }
     
     func drawChannel(data: [UInt], maximum: UInt, layer: CAShapeLayer)
     {
         let path = UIBezierPath()
-        path.moveToPoint(CGPoint(x: 0, y: frame.height))
+        path.move(to: CGPoint(x: 0, y: frame.height))
 
-        let interpolationPoints: [CGPoint] = data.enumerate().map
+        let interpolationPoints: [CGPoint] = data.enumerated().map
         {
             (index, element) in
             
@@ -212,14 +212,14 @@ class HistogramDisplay: UIView
         }
         
         let curves = UIBezierPath()
-        curves.interpolatePointsWithHermite(interpolationPoints)
+        curves.interpolatePointsWithHermite(interpolationPoints: interpolationPoints)
         
-        path.appendPath(curves)
+        path.append(curves)
         
-        path.addLineToPoint(CGPoint(x: frame.width, y: frame.height))
-        path.addLineToPoint(CGPoint(x: 0, y: frame.height))
+        path.addLine(to: CGPoint(x: frame.width, y: frame.height))
+        path.addLine(to: CGPoint(x: 0, y: frame.height))
         
-        layer.path = path.CGPath
+        layer.path = path.cgPath
     }
 }
 
@@ -228,7 +228,7 @@ extension UIBezierPath
     func interpolatePointsWithHermite(interpolationPoints : [CGPoint], alpha : CGFloat = 1.0/3.0)
     {
         guard !interpolationPoints.isEmpty else { return }
-        self.moveToPoint(interpolationPoints[0])
+        self.move(to: interpolationPoints[0])
         
         let n = interpolationPoints.count - 1
         
@@ -274,7 +274,7 @@ extension UIBezierPath
             
             let controlPoint2 = CGPoint(x: currentPoint.x - mx * alpha, y: currentPoint.y - my * alpha)
             
-            self.addCurveToPoint(endPoint, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
+            self.addCurve(to: endPoint, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
         }
     }
 }

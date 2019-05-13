@@ -19,7 +19,7 @@ class SimpleSky: CIFilter
     var inputWidth: CGFloat = 640
     var inputHeight: CGFloat = 640
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Simple Sky",
@@ -100,11 +100,11 @@ class SimpleSky: CIFilter
     
     let skyKernel: CIColorKernel =
     {
-        let shaderPath = NSBundle.mainBundle().pathForResource("cikl_sky", ofType: "cikernel")
+        let shaderPath = Bundle.main.path(forResource: "cikl_sky", ofType: "cikernel")
         
         guard let path = shaderPath,
-            code = try? String(contentsOfFile: path),
-            kernel = CIColorKernel(string: code) else
+            let code = try? String(contentsOfFile: path),
+            let kernel = CIColorKernel(source: code) else
         {
             fatalError("Unable to build Sky shader")
         }
@@ -118,7 +118,7 @@ class SimpleSky: CIFilter
         
         let arguments = [inputWidth, inputHeight, inputSunDiameter, inputAlbedo, inputSunAzimuth, inputSunAlitude, inputSkyDarkness, inputScattering]
         
-        let final = skyKernel.applyWithExtent(extent, arguments: arguments)?.imageByCroppingToRect(extent)
+        let final = skyKernel.apply(extent: extent, arguments: arguments)?.cropped(to: extent)
         
         return final
     }

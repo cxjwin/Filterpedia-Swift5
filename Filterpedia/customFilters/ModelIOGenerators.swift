@@ -23,14 +23,14 @@ class ModelIOColorFromTemperature: CIFilter
             colorTemperatureGradientFrom: inputTemperature.toFloat(),
             toColorTemperature: inputTemperature.toFloat(),
             name: "",
-            textureDimensions: [Int32(inputSize.X), Int32(inputSize.Y)])
+            textureDimensions: [Int32(inputSize.x), Int32(inputSize.y)])
         
         let swatchImage = swatch.imageFromTexture()!.takeRetainedValue()
         
-        return CIImage(CGImage: swatchImage)
+        return CIImage(cgImage: swatchImage)
     }
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "ModelIO Color From Temperature",
@@ -61,25 +61,25 @@ class ModelIOColorScalarNoise: CIFilter
     var inputSize = CIVector(x: 640, y: 640)
     var inputSmoothness: CGFloat = 0.5
     
-    let makeOpaqueKernel = CIColorKernel(string: "kernel vec4 xyz(__sample pixel) { return vec4(pixel.rgb, 1.0); }")
+    let makeOpaqueKernel = CIColorKernel(source: "kernel vec4 xyz(__sample pixel) { return vec4(pixel.rgb, 1.0); }")
     
     override var outputImage: CIImage!
     {
         let noise = MDLNoiseTexture(scalarNoiseWithSmoothness: inputSmoothness.toFloat(),
             name: "",
-            textureDimensions: [Int32(inputSize.X), Int32(inputSize.Y)],
+            textureDimensions: [Int32(inputSize.x), Int32(inputSize.y)],
             channelCount: 4,
-            channelEncoding: MDLTextureChannelEncoding.UInt8,
+            channelEncoding: MDLTextureChannelEncoding.uInt8,
             grayscale: false)
         
         let noiseImage = noise.imageFromTexture()!.takeRetainedValue()
         
-        let final = CIImage(CGImage: noiseImage)
+        let final = CIImage(cgImage: noiseImage)
         
-        return makeOpaqueKernel?.applyWithExtent(final.extent, arguments: [final])
+        return makeOpaqueKernel?.apply(extent: final.extent, arguments: [final])
     }
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "ModelIO Color Scalar Noise",
@@ -136,8 +136,8 @@ class ModelIOSkyGenerator: CIFilter
         else
         {
             sky = MDLSkyCubeTexture(name: nil,
-                channelEncoding: MDLTextureChannelEncoding.UInt8,
-                textureDimensions: [Int32(inputSize.X), Int32(inputSize.Y)],
+                                    channelEncoding: MDLTextureChannelEncoding.uInt8,
+                textureDimensions: [Int32(inputSize.x), Int32(inputSize.y)],
                 turbidity: inputTurbidity.toFloat(),
                 sunElevation: inputSunElevation.toFloat(),
                 upperAtmosphereScattering: inputUpperAtmosphereScattering.toFloat(),
@@ -148,16 +148,16 @@ class ModelIOSkyGenerator: CIFilter
         sky!.exposure = inputExposure.toFloat()
         sky!.saturation = inputSaturation.toFloat()
         
-        sky!.updateTexture()
+        sky!.update()
         
         let skyImage = sky!.imageFromTexture()!.takeRetainedValue()
         
-        return  CIImage(CGImage: skyImage)
-            .imageByCroppingToRect(CGRect(x: 0, y: 0, width: inputSize.X, height: inputSize.Y))
+        return  CIImage(cgImage: skyImage)
+            .cropped(to: CGRect(x: 0, y: 0, width: inputSize.x, height: inputSize.y))
     }
     
         
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "ModelIO Sky Generator",

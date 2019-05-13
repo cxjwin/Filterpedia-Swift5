@@ -18,10 +18,10 @@ class SimplePlasma: CIFilter
     var inputIterations: CGFloat = 7
     var inputScale: CGFloat = 100
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
-            kCIAttributeFilterDisplayName: "Simple Plasma",
+            kCIAttributeFilterDisplayName: "Simple Plasma" as Any,
             
             "inputSize": [kCIAttributeIdentity: 0,
                 kCIAttributeClass: "CIVector",
@@ -67,7 +67,7 @@ class SimplePlasma: CIFilter
         ]
     }
     
-    let kernel = CIColorKernel(string:
+    let kernel = CIColorKernel(source:
         "kernel vec4 colorkernel(float time, float iterations, float sharpness, float scale)" +
             "{" +
             "   vec2 uv = destCoord() / scale; " +
@@ -94,10 +94,10 @@ class SimplePlasma: CIFilter
             return nil
         }
         
-        let extent = CGRect(origin: CGPointZero, size: CGSize(width: inputSize.X, height: inputSize.Y))
+        let extent = CGRect(origin: CGPoint.zero, size: CGSize(width: inputSize.x, height: inputSize.y))
         
-        return kernel.applyWithExtent(
-            extent,
+        return kernel.apply(
+            extent: extent,
             arguments: [inputTime / 10, inputIterations, inputSharpness, inputScale])
     }
     

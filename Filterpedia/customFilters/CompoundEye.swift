@@ -31,7 +31,7 @@ class CompoundEye: CIFilter
     var inputBend: CGFloat = 4.0
     var inputBackgroundColor = CIColor(red: 0.2, green: 0.2, blue: 0.2)
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Compound Eye",
@@ -74,7 +74,7 @@ class CompoundEye: CIFilter
         inputBackgroundColor = CIColor(red: 0.2, green: 0.2, blue: 0.2)
     }
     
-    let colorKernel = CIColorKernel(string:
+    let colorKernel = CIColorKernel(source:
         "kernel vec4 color(float width, float halfWidth, float height, float diameter)" +
         "{" +
         " float y = float(int(destCoord().y / height)) * height;  " +
@@ -91,7 +91,7 @@ class CompoundEye: CIFilter
         "}"
     )
     
-    let warpKernel = CIWarpKernel(string:
+    let warpKernel = CIWarpKernel(source:
         "kernel vec2 warp(float width, float halfWidth, float height, float diameter, float bend)" +
         "{ " +
         
@@ -120,8 +120,8 @@ class CompoundEye: CIFilter
     override var outputImage : CIImage!
     {
         if let inputImage = inputImage,
-            warpKernel = warpKernel,
-            colorKernel = colorKernel
+            let warpKernel = warpKernel,
+            let colorKernel = colorKernel
         {
             let halfWidth = inputWidth / 2
             let height = sqrt(3.0) / 2.0 * inputWidth
@@ -129,26 +129,26 @@ class CompoundEye: CIFilter
             
             let extent = inputImage.extent
             
-            let warpedImage = warpKernel.applyWithExtent(extent,
-                roiCallback:
+            let warpedImage = warpKernel.apply(extent: extent,
+                                               roiCallback:
                 {
                     (index, rect) in
                     return rect
-                },
-                inputImage: inputImage,
+            },
+                                               image: inputImage,
                 arguments: [inputWidth, halfWidth, height, diameter, inputBend])!
             
-            let maskImage =  colorKernel.applyWithExtent(extent,
+            let maskImage =  colorKernel.apply(extent: extent,
                 arguments: [inputWidth, halfWidth, height, diameter])!
             
             let backgroundImage = CIImage(color: inputBackgroundColor)
-                .imageByCroppingToRect(extent)
+                .cropped(to: extent)
             
             return CIFilter(name: "CIBlendWithMask",
-                withInputParameters: [
-                kCIInputBackgroundImageKey: warpedImage,
-                kCIInputImageKey: backgroundImage,
-                kCIInputMaskImageKey: maskImage])?.outputImage
+                            parameters: [
+                                kCIInputBackgroundImageKey: warpedImage,
+                                kCIInputImageKey: backgroundImage,
+                                kCIInputMaskImageKey: maskImage])?.outputImage
         }
         return nil
     }

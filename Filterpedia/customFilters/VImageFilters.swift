@@ -48,7 +48,7 @@ class CircularBokeh: CIFilter, VImageFilter
     
     private var probe: [UInt8]?
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Circular Bokeh",
@@ -100,7 +100,7 @@ class CircularBokeh: CIFilter, VImageFilter
         
         let imageRef = ciContext.createCGImage(
             inputImage,
-            fromRect: inputImage.extent)
+            from: inputImage.extent)
         
         var imageBuffer = vImage_Buffer()
         
@@ -108,16 +108,17 @@ class CircularBokeh: CIFilter, VImageFilter
             &imageBuffer,
             &format,
             nil,
-            imageRef,
+            imageRef!,
             UInt32(kvImageNoFlags))
         
-        let pixelBuffer = malloc(CGImageGetBytesPerRow(imageRef) * CGImageGetHeight(imageRef))
+        
+        let pixelBuffer = malloc(imageRef!.bytesPerRow * imageRef!.height)
         
         var outBuffer = vImage_Buffer(
             data: pixelBuffer,
-            height: UInt(CGImageGetHeight(imageRef)),
-            width: UInt(CGImageGetWidth(imageRef)),
-            rowBytes: CGImageGetBytesPerRow(imageRef))
+            height: UInt(imageRef!.height),
+            width: UInt(imageRef!.width),
+            rowBytes: imageRef!.bytesPerRow)
         
         let probeValue = UInt8((1 - inputBokehBias) * 30)
         let radius = Int(inputBokehRadius)
@@ -125,7 +126,7 @@ class CircularBokeh: CIFilter, VImageFilter
         
         if probe == nil
         {
-            probe = 0.stride(to: (diameter * diameter), by: 1).map
+            probe = stride(from: 0, to: (diameter * diameter), by: 1).map
             {
                 let x = Float(($0 % diameter) - radius)
                 let y = Float(($0 / diameter) - radius)
@@ -158,9 +159,9 @@ class CircularBokeh: CIFilter, VImageFilter
         free(pixelBuffer)
         free(imageBuffer.data)
         
-        return outImage!.imageByApplyingFilter(
+        return outImage!.applyingFilter(
             "CIGaussianBlur",
-            withInputParameters: [kCIInputRadiusKey: inputBlurRadius])
+            parameters: [kCIInputRadiusKey: inputBlurRadius])
     }
 }
 
@@ -170,7 +171,7 @@ class HistogramEqualization: CIFilter, VImageFilter
 {
     var inputImage: CIImage?
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Histogram Equalization",
@@ -195,7 +196,7 @@ class HistogramEqualization: CIFilter, VImageFilter
         
         let imageRef = ciContext.createCGImage(
             inputImage,
-            fromRect: inputImage.extent)
+            from: inputImage.extent)
         
         var imageBuffer = vImage_Buffer()
         
@@ -203,16 +204,16 @@ class HistogramEqualization: CIFilter, VImageFilter
             &imageBuffer,
             &format,
             nil,
-            imageRef,
+            imageRef!,
             UInt32(kvImageNoFlags))
         
-        let pixelBuffer = malloc(CGImageGetBytesPerRow(imageRef) * CGImageGetHeight(imageRef))
+        let pixelBuffer = malloc(imageRef!.bytesPerRow * imageRef!.height)
         
         var outBuffer = vImage_Buffer(
             data: pixelBuffer,
-            height: UInt(CGImageGetHeight(imageRef)),
-            width: UInt(CGImageGetWidth(imageRef)),
-            rowBytes: CGImageGetBytesPerRow(imageRef))
+            height: UInt(imageRef!.height),
+            width: UInt(imageRef!.width),
+            rowBytes: imageRef!.bytesPerRow)
         
         
         vImageEqualization_ARGB8888(
@@ -243,7 +244,7 @@ class EndsInContrastStretch: CIFilter, VImageFilter
     var inputPercentHiGreen: CGFloat = 0
     var inputPercentHiBlue: CGFloat = 0
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Ends In Contrast Stretch",
@@ -322,7 +323,7 @@ class EndsInContrastStretch: CIFilter, VImageFilter
         
         let imageRef = ciContext.createCGImage(
             inputImage,
-            fromRect: inputImage.extent)
+            from: inputImage.extent)
         
         var imageBuffer = vImage_Buffer()
         
@@ -330,16 +331,16 @@ class EndsInContrastStretch: CIFilter, VImageFilter
             &imageBuffer,
             &format,
             nil,
-            imageRef,
+            imageRef!,
             UInt32(kvImageNoFlags))
         
-        let pixelBuffer = malloc(CGImageGetBytesPerRow(imageRef) * CGImageGetHeight(imageRef))
+        let pixelBuffer = malloc(imageRef!.bytesPerRow * imageRef!.height)
         
         var outBuffer = vImage_Buffer(
             data: pixelBuffer,
-            height: UInt(CGImageGetHeight(imageRef)),
-            width: UInt(CGImageGetWidth(imageRef)),
-            rowBytes: CGImageGetBytesPerRow(imageRef))
+            height: UInt(imageRef!.height),
+            width: UInt(imageRef!.width),
+            rowBytes: imageRef!.bytesPerRow)
         
         let low = [inputPercentLowRed, inputPercentLowGreen, inputPercentLowBlue, 0].map { return UInt32($0) }
         let hi = [inputPercentHiRed, inputPercentHiGreen, inputPercentHiBlue, 0].map { return UInt32($0) }
@@ -366,7 +367,7 @@ class ContrastStretch: CIFilter, VImageFilter
 {
     var inputImage: CIImage?
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Contrast Stretch",
@@ -391,7 +392,7 @@ class ContrastStretch: CIFilter, VImageFilter
         
         let imageRef = ciContext.createCGImage(
             inputImage,
-            fromRect: inputImage.extent)
+            from: inputImage.extent)
         
         var imageBuffer = vImage_Buffer()
         
@@ -399,16 +400,16 @@ class ContrastStretch: CIFilter, VImageFilter
             &imageBuffer,
             &format,
             nil,
-            imageRef,
+            imageRef!,
             UInt32(kvImageNoFlags))
 
-        let pixelBuffer = malloc(CGImageGetBytesPerRow(imageRef) * CGImageGetHeight(imageRef))
+        let pixelBuffer = malloc(imageRef!.bytesPerRow * imageRef!.height)
         
         var outBuffer = vImage_Buffer(
             data: pixelBuffer,
-            height: UInt(CGImageGetHeight(imageRef)),
-            width: UInt(CGImageGetWidth(imageRef)),
-            rowBytes: CGImageGetBytesPerRow(imageRef))
+            height: UInt(imageRef!.height),
+            width: UInt(imageRef!.width),
+            rowBytes: imageRef!.bytesPerRow)
         
         vImageContrastStretch_ARGB8888(
             &imageBuffer,
@@ -431,7 +432,7 @@ class HistogramSpecification: CIFilter, VImageFilter
     var inputImage: CIImage?
     var inputHistogramSource: CIImage?
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Histogram Specification",
@@ -454,48 +455,49 @@ class HistogramSpecification: CIFilter, VImageFilter
     override var outputImage: CIImage?
     {
         guard let inputImage = inputImage,
-            inputHistogramSource = inputHistogramSource else
+            let inputHistogramSource = inputHistogramSource else
         {
             return nil
         }
         
         let imageRef = ciContext.createCGImage(
             inputImage,
-            fromRect: inputImage.extent)
+            from: inputImage.extent)
         
-        var imageBuffer = vImageBufferFromCIImage(inputImage, ciContext: ciContext)
-        var histogramSourceBuffer = vImageBufferFromCIImage(inputHistogramSource, ciContext: ciContext)
+        var imageBuffer = vImageBufferFromCIImage(ciImage: inputImage, ciContext: ciContext)
+        var histogramSourceBuffer = vImageBufferFromCIImage(ciImage: inputHistogramSource, ciContext: ciContext)
         
-        let alpha = [UInt](count: 256, repeatedValue: 0)
-        let red = [UInt](count: 256, repeatedValue: 0)
-        let green = [UInt](count: 256, repeatedValue: 0)
-        let blue = [UInt](count: 256, repeatedValue: 0)
+        let red: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let green: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let blue: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
+        let alpha: [vImagePixelCount]? = [vImagePixelCount](repeating: 0, count: 256)
         
-        let alphaMutablePointer = UnsafeMutablePointer<vImagePixelCount>(alpha)
-        let redMutablePointer = UnsafeMutablePointer<vImagePixelCount>(red)
-        let greenMutablePointer = UnsafeMutablePointer<vImagePixelCount>(green)
-        let blueMutablePointer = UnsafeMutablePointer<vImagePixelCount>(blue)
+        let redPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: red)
+        let greenPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: green)
+        let bluePtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: blue)
+        let alphaPtr: UnsafeMutablePointer<vImagePixelCount>? = UnsafeMutablePointer<vImagePixelCount>(mutating: alpha)
         
-        let rgba = [redMutablePointer, greenMutablePointer, blueMutablePointer, alphaMutablePointer]
-        
-        let histogram = UnsafeMutablePointer<UnsafeMutablePointer<vImagePixelCount>>(rgba)
+        let rgba = [redPtr, greenPtr, bluePtr, alphaPtr]
+        let p_rgba: UnsafePointer<UnsafeMutablePointer<vImagePixelCount>?> = UnsafePointer<UnsafeMutablePointer<vImagePixelCount>?>(rgba)
+        let histogram = UnsafeMutablePointer<UnsafeMutablePointer<vImagePixelCount>?>(mutating: p_rgba)
         
         vImageHistogramCalculation_ARGB8888(&histogramSourceBuffer, histogram, UInt32(kvImageNoFlags))
         
-        let pixelBuffer = malloc(CGImageGetBytesPerRow(imageRef) * CGImageGetHeight(imageRef))
+        let pixelBuffer = malloc(imageRef!.bytesPerRow * imageRef!.height)
         
         var outBuffer = vImage_Buffer(
             data: pixelBuffer,
-            height: UInt(CGImageGetHeight(imageRef)),
-            width: UInt(CGImageGetWidth(imageRef)),
-            rowBytes: CGImageGetBytesPerRow(imageRef))
+            height: UInt(imageRef!.height),
+            width: UInt(imageRef!.width),
+            rowBytes: imageRef!.bytesPerRow)
 
-        let alphaPointer = UnsafePointer<vImagePixelCount>(alpha)
-        let redPointer = UnsafePointer<vImagePixelCount>(red)
-        let greenPointer = UnsafePointer<vImagePixelCount>(green)
-        let bluePointer = UnsafePointer<vImagePixelCount>(blue)
+        let alphaPointer: UnsafePointer<vImagePixelCount>? = UnsafePointer<vImagePixelCount>(alpha)
+        let redPointer: UnsafePointer<vImagePixelCount>? = UnsafePointer<vImagePixelCount>(red)
+        let greenPointer: UnsafePointer<vImagePixelCount>? = UnsafePointer<vImagePixelCount>(green)
+        let bluePointer: UnsafePointer<vImagePixelCount>? = UnsafePointer<vImagePixelCount>(blue)
         
-        let rgbaMutablePointer = UnsafeMutablePointer<UnsafePointer<vImagePixelCount>>([redPointer, greenPointer, bluePointer, alphaPointer])
+        let rgbaPointer = UnsafePointer<UnsafePointer<vImagePixelCount>?>([redPointer, greenPointer, bluePointer, alphaPointer])
+        let rgbaMutablePointer = UnsafeMutablePointer<UnsafePointer<vImagePixelCount>?>(mutating: rgbaPointer)
         
         vImageHistogramSpecification_ARGB8888(&imageBuffer, &outBuffer, rgbaMutablePointer, UInt32(kvImageNoFlags))
         
@@ -515,7 +517,7 @@ protocol VImageFilter {
 }
 
 let bitmapInfo:CGBitmapInfo = CGBitmapInfo(
-    rawValue: CGImageAlphaInfo.Last.rawValue)
+    rawValue: CGImageAlphaInfo.last.rawValue)
 
 var format = vImage_CGImageFormat(
     bitsPerComponent: 8,
@@ -524,13 +526,13 @@ var format = vImage_CGImageFormat(
     bitmapInfo: bitmapInfo,
     version: 0,
     decode: nil,
-    renderingIntent: .RenderingIntentDefault)
+    renderingIntent: CGColorRenderingIntent.defaultIntent)
 
 func vImageBufferFromCIImage(ciImage: CIImage, ciContext: CIContext) -> vImage_Buffer
 {
     let imageRef = ciContext.createCGImage(
         ciImage,
-        fromRect: ciImage.extent)
+        from: ciImage.extent)
     
     var buffer = vImage_Buffer()
     
@@ -538,7 +540,7 @@ func vImageBufferFromCIImage(ciImage: CIImage, ciContext: CIContext) -> vImage_B
         &buffer,
         &format,
         nil,
-        imageRef,
+        imageRef!,
         UInt32(kvImageNoFlags))
     
     return buffer
@@ -559,6 +561,6 @@ extension CIImage
             UInt32(kvImageNoFlags),
             &error)
         
-        self.init(CGImage: cgImage.takeRetainedValue())
+        self.init(cgImage: cgImage!.takeRetainedValue())
     }
 }

@@ -27,7 +27,7 @@ class TransverseChromaticAberration: CIFilter
     var inputFalloff: CGFloat = 0.2
     var inputSamples: CGFloat = 10
     
-    override var attributes: [String : AnyObject]
+    override var attributes: [String : Any]
     {
         return [
             kCIAttributeFilterDisplayName: "Transverse Chromatic Aberration",
@@ -66,7 +66,7 @@ class TransverseChromaticAberration: CIFilter
         ]
     }
     
-    let transverseChromaticAberrationKernel = CIKernel(string:
+    let transverseChromaticAberrationKernel = CIKernel(source:
         "kernel vec4 motionBlur(sampler image, vec2 size, float sampleCount, float start, float blur) {" +
         "  int sampleCountInt = int(floor(sampleCount));" +
         "  vec4 accumulator = vec4(0.0);" +
@@ -97,7 +97,7 @@ class TransverseChromaticAberration: CIFilter
     override var outputImage: CIImage?
     {
         guard let inputImage = inputImage,
-            kernel = transverseChromaticAberrationKernel else
+            let kernel = transverseChromaticAberrationKernel else
         {
             return nil
         }
@@ -106,10 +106,10 @@ class TransverseChromaticAberration: CIFilter
                     CIVector(x: inputImage.extent.width, y: inputImage.extent.height),
                     inputSamples,
                     inputFalloff,
-                    inputBlur]
+                    inputBlur] as [Any]
         
-        return kernel.applyWithExtent(
-            inputImage.extent,
+        return kernel.apply(
+            extent: inputImage.extent,
             roiCallback: {
                 (index, rect) in
                 return rect.insetBy(dx: -1, dy: -1)
