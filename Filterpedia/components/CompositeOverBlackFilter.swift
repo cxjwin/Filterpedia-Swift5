@@ -14,7 +14,7 @@ class CompositeOverBlackFilter: CIFilter
     let black: CIFilter
     let composite: CIFilter
     
-    var inputImage : CIImage?
+    @objc var inputImage : CIImage?
     
     override init()
     {

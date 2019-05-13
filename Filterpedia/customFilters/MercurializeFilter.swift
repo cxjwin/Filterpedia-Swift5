@@ -25,15 +25,15 @@ class MercurializeFilter: CIFilter
 {
     // MARK: Filter parameters
     
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputEdgeThickness: CGFloat = 5
+    @objc var inputEdgeThickness: CGFloat = 5
     
-    var inputScale: CGFloat = 10
+    @objc var inputScale: CGFloat = 10
 
     // MARK: Shading image attributes
 
-    var inputLightColor = CIColor(red: 1, green: 1, blue: 0.75)
+    @objc var inputLightColor = CIColor(red: 1, green: 1, blue: 0.75)
     {
         didSet
         {
@@ -41,7 +41,7 @@ class MercurializeFilter: CIFilter
         }
     }
     
-    var inputLightPosition = CIVector(x: 0, y: 1)
+    @objc var inputLightPosition = CIVector(x: 0, y: 1)
     {
         didSet
         {
@@ -49,7 +49,7 @@ class MercurializeFilter: CIFilter
         }
     }
     
-    var inputAmbientLightColor = CIColor(red: 0.5, green: 0.5, blue: 0.75)
+    @objc var inputAmbientLightColor = CIColor(red: 0.5, green: 0.5, blue: 0.75)
     {
         didSet
         {
@@ -57,7 +57,7 @@ class MercurializeFilter: CIFilter
         }
     }
     
-    var inputShininess: CGFloat = 0.05
+    @objc var inputShininess: CGFloat = 0.05
     {
         didSet
         {

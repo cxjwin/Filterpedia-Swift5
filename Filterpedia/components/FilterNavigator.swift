@@ -129,7 +129,7 @@ class FilterNavigator: UIView
 
 extension FilterNavigator: UITableViewDelegate
 {
-    private func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let filterName: String
         
@@ -234,7 +234,7 @@ extension FilterNavigator: UITableViewDataSource
             }[indexPath.row]
         }
         
-        cell.textLabel?.text = CIFilter.localizedName(forFilterName: filterName) ?? (CIFilter(name: filterName)?.attributes[kCIAttributeFilterDisplayName] as? String) ?? filterName
+        cell.textLabel?.text = filterName
         
         return cell
     }

@@ -25,11 +25,11 @@ import CoreImage
 
 class CompoundEye: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputWidth: CGFloat = 32
-    var inputBend: CGFloat = 4.0
-    var inputBackgroundColor = CIColor(red: 0.2, green: 0.2, blue: 0.2)
+    @objc var inputWidth: CGFloat = 32
+    @objc var inputBend: CGFloat = 4.0
+    @objc var inputBackgroundColor = CIColor(red: 0.2, green: 0.2, blue: 0.2)
     
     override var attributes: [String : Any]
     {

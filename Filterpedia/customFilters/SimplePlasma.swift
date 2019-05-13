@@ -12,11 +12,11 @@ import CoreImage
 
 class SimplePlasma: CIFilter
 {
-    var inputSize = CIVector(x: 640, y: 640)
-    var inputTime: CGFloat = 0
-    var inputSharpness: CGFloat = 0.5
-    var inputIterations: CGFloat = 7
-    var inputScale: CGFloat = 100
+    @objc var inputSize = CIVector(x: 640, y: 640)
+    @objc var inputTime: CGFloat = 0
+    @objc var inputSharpness: CGFloat = 0.5
+    @objc var inputIterations: CGFloat = 7
+    @objc var inputScale: CGFloat = 100
     
     override var attributes: [String : Any]
     {

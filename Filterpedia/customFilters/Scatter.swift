@@ -24,8 +24,8 @@ import CoreImage
 // inside a warp kernel.
 class ScatterWarp: CIFilter
 {
-    var inputImage: CIImage?
-    var inputScatterRadius: CGFloat = 25
+    @objc var inputImage: CIImage?
+    @objc var inputScatterRadius: CGFloat = 25
     
     override var attributes: [String : Any]
     {
@@ -88,9 +88,9 @@ class ScatterWarp: CIFilter
 // random generator can be blurred allowing for a smoothness attribute.
 class Scatter: CIFilter
 {
-    var inputImage: CIImage?
-    var inputScatterRadius: CGFloat = 25
-    var inputScatterSmoothness: CGFloat = 1.0
+    @objc var inputImage: CIImage?
+    @objc var inputScatterRadius: CGFloat = 25
+    @objc var inputScatterSmoothness: CGFloat = 1.0
     
     override var attributes: [String : Any]
     {

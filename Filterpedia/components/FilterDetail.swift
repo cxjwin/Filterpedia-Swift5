@@ -133,7 +133,7 @@ class FilterDetail: UIView
     private var currentFilter: CIFilter?
     
     /// User defined filter parameter values
-    private var filterParameterValues: [String: AnyObject] = [kCIInputImageKey: assets.first!.ciImage]
+    private var filterParameterValues: [String: Any] = [kCIInputImageKey: assets.first!.ciImage]
     
     override init(frame: CGRect)
     {
@@ -216,7 +216,7 @@ class FilterDetail: UIView
         
         for inputKey in currentFilter.inputKeys
         {
-            if let attribute = attributes[inputKey] as? [String : AnyObject]
+            if let attribute = attributes[inputKey] as? [String : Any]
             {
                 // default image
                 if let className = attribute[kCIAttributeClass] as? String, className == "CIImage" && filterParameterValues[inputKey] == nil
@@ -228,7 +228,7 @@ class FilterDetail: UIView
                 if let maxValue = attribute[kCIAttributeSliderMax] as? Float,
                     let filterParameterValue = filterParameterValues[inputKey] as? Float, filterParameterValue > maxValue
                 {
-                    filterParameterValues[inputKey] = maxValue as AnyObject
+                    filterParameterValues[inputKey] = maxValue as Any
                 }
                 
                 // ensure vector is correct length
@@ -270,7 +270,11 @@ class FilterDetail: UIView
             
             for (key, value) in self.filterParameterValues where currentFilter.inputKeys.contains(key)
             {
-                currentFilter.setValue(value, forKey: key)
+                do {
+                    currentFilter.setValue(value, forKey: key)
+                } catch {
+                    print("Unexpected error: \(error).")
+                }
             }
             
             let outputImage = currentFilter.outputImage!
@@ -401,7 +405,7 @@ extension FilterDetail: UITableViewDataSource
                                                  for: indexPath as IndexPath) as! FilterInputItemRenderer
  
         if let inputKey = currentFilter?.inputKeys[indexPath.row],
-            let attribute = currentFilter?.attributes[inputKey] as? [String : AnyObject]
+            let attribute = currentFilter?.attributes[inputKey] as? [String : Any]
         {
             cell.detail = (inputKey: inputKey,
                 attribute: attribute,
@@ -418,7 +422,7 @@ extension FilterDetail: UITableViewDataSource
 
 extension FilterDetail: FilterInputItemRendererDelegate
 {
-    func filterInputItemRenderer(filterInputItemRenderer: FilterInputItemRenderer, didChangeValue: AnyObject?, forKey: String?)
+    func filterInputItemRenderer(filterInputItemRenderer: FilterInputItemRenderer, didChangeValue: Any?, forKey: String?)
     {
         if let key = forKey, let value = didChangeValue
         {

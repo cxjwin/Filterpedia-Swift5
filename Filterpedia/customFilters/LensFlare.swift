@@ -24,28 +24,28 @@ import CoreImage
 
 class LensFlare: CIFilter
 {
-    var inputOrigin = CIVector(x: 150, y: 150)
-    var inputSize = CIVector(x: 640, y: 640)
+    @objc var inputOrigin = CIVector(x: 150, y: 150)
+    @objc var inputSize = CIVector(x: 640, y: 640)
     
-    var inputColor = CIVector(x: 0.5, y: 0.2, z: 0.3)
-    var inputReflectionBrightness: CGFloat = 0.25
+    @objc var inputColor = CIVector(x: 0.5, y: 0.2, z: 0.3)
+    @objc var inputReflectionBrightness: CGFloat = 0.25
     
-    var inputPositionOne: CGFloat = 0.15
-    var inputPositionTwo: CGFloat = 0.3
-    var inputPositionThree: CGFloat = 0.4
-    var inputPositionFour: CGFloat = 0.45
-    var inputPositionFive: CGFloat = 0.6
-    var inputPositionSix: CGFloat = 0.75
-    var inputPositionSeven: CGFloat = 0.8
+    @objc var inputPositionOne: CGFloat = 0.15
+    @objc var inputPositionTwo: CGFloat = 0.3
+    @objc var inputPositionThree: CGFloat = 0.4
+    @objc var inputPositionFour: CGFloat = 0.45
+    @objc var inputPositionFive: CGFloat = 0.6
+    @objc var inputPositionSix: CGFloat = 0.75
+    @objc var inputPositionSeven: CGFloat = 0.8
     
-    var inputReflectionSizeZero: CGFloat = 20
-    var inputReflectionSizeOne: CGFloat = 25
-    var inputReflectionSizeTwo: CGFloat = 12.5
-    var inputReflectionSizeThree: CGFloat = 5
-    var inputReflectionSizeFour: CGFloat = 20
-    var inputReflectionSizeFive: CGFloat = 35
-    var inputReflectionSizeSix: CGFloat = 40
-    var inputReflectionSizeSeven: CGFloat = 20
+    @objc var inputReflectionSizeZero: CGFloat = 20
+    @objc var inputReflectionSizeOne: CGFloat = 25
+    @objc var inputReflectionSizeTwo: CGFloat = 12.5
+    @objc var inputReflectionSizeThree: CGFloat = 5
+    @objc var inputReflectionSizeFour: CGFloat = 20
+    @objc var inputReflectionSizeFive: CGFloat = 35
+    @objc var inputReflectionSizeSix: CGFloat = 40
+    @objc var inputReflectionSizeSeven: CGFloat = 20
     
     override var attributes: [String : Any]
     {

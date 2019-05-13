@@ -177,12 +177,12 @@ class CMYKToneCurves: CIFilter
 /// - Date: April 2016
 class CMYKLevels: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputCyanMultiplier: CGFloat = 1
-    var inputMagentaMultiplier: CGFloat = 1
-    var inputYellowMultiplier: CGFloat = 1
-    var inputBlackMultiplier: CGFloat = 1
+    @objc var inputCyanMultiplier: CGFloat = 1
+    @objc var inputMagentaMultiplier: CGFloat = 1
+    @objc var inputYellowMultiplier: CGFloat = 1
+    @objc var inputBlackMultiplier: CGFloat = 1
     
     override var attributes: [String : Any]
     {
@@ -285,11 +285,11 @@ class CMYKLevels: CIFilter
 /// - Date: April 2016
 class CMYKRegistrationMismatch: CIFilter
 {
-    var inputImage: CIImage?
-    var inputCyanOffset = CIVector(x: 5, y: 2)
-    var inputMagentaOffset = CIVector(x: 1, y: 7)
-    var inputYellowOffset = CIVector(x: 3, y: 4)
-    var inputBlackOffset = CIVector(x: 7, y: 2)
+    @objc var inputImage: CIImage?
+    @objc var inputCyanOffset = CIVector(x: 5, y: 2)
+    @objc var inputMagentaOffset = CIVector(x: 1, y: 7)
+    @objc var inputYellowOffset = CIVector(x: 3, y: 4)
+    @objc var inputBlackOffset = CIVector(x: 7, y: 2)
     
     override var attributes: [String : Any]
     {

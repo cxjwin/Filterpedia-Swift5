@@ -16,10 +16,10 @@ import CoreImage
 
 class BayerDitherFilter: CIFilter
 {
-    var inputImage: CIImage?
-    var inputIntensity = CGFloat(5.0)
-    var inputMatrix = CGFloat(8.0)
-    var inputPalette = CGFloat(0.0)
+    @objc var inputImage: CIImage?
+    @objc var inputIntensity = CGFloat(5.0)
+    @objc var inputMatrix = CGFloat(8.0)
+    @objc var inputPalette = CGFloat(0.0)
     
     override var attributes: [String : Any]
     {

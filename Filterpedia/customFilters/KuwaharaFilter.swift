@@ -22,8 +22,8 @@ import CoreImage
 
 class KuwaharaFilter: CIFilter
 {
-    var inputImage: CIImage?
-    var inputRadius: CGFloat = 15
+    @objc var inputImage: CIImage?
+    @objc var inputRadius: CGFloat = 15
     
     override var attributes: [String : Any]
     {

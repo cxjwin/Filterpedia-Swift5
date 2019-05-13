@@ -27,8 +27,8 @@ import Accelerate
 
 class CircularBokeh: CIFilter, VImageFilter
 {
-    var inputImage: CIImage?
-    var inputBlurRadius: CGFloat = 2
+    @objc var inputImage: CIImage?
+    @objc var inputBlurRadius: CGFloat = 2
     
     var inputBokehRadius: CGFloat = 15
     {
@@ -169,7 +169,7 @@ class CircularBokeh: CIFilter, VImageFilter
 
 class HistogramEqualization: CIFilter, VImageFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
     override var attributes: [String : Any]
     {
@@ -234,15 +234,15 @@ class HistogramEqualization: CIFilter, VImageFilter
 
 class EndsInContrastStretch: CIFilter, VImageFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputPercentLowRed: CGFloat = 0
-    var inputPercentLowGreen: CGFloat = 0
-    var inputPercentLowBlue: CGFloat = 0
+    @objc var inputPercentLowRed: CGFloat = 0
+    @objc var inputPercentLowGreen: CGFloat = 0
+    @objc var inputPercentLowBlue: CGFloat = 0
     
-    var inputPercentHiRed: CGFloat = 0
-    var inputPercentHiGreen: CGFloat = 0
-    var inputPercentHiBlue: CGFloat = 0
+    @objc var inputPercentHiRed: CGFloat = 0
+    @objc var inputPercentHiGreen: CGFloat = 0
+    @objc var inputPercentHiBlue: CGFloat = 0
     
     override var attributes: [String : Any]
     {
@@ -365,7 +365,7 @@ class EndsInContrastStretch: CIFilter, VImageFilter
 
 class ContrastStretch: CIFilter, VImageFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
     override var attributes: [String : Any]
     {
@@ -429,8 +429,8 @@ class ContrastStretch: CIFilter, VImageFilter
 
 class HistogramSpecification: CIFilter, VImageFilter
 {
-    var inputImage: CIImage?
-    var inputHistogramSource: CIImage?
+    @objc var inputImage: CIImage?
+    @objc var inputHistogramSource: CIImage?
     
     override var attributes: [String : Any]
     {

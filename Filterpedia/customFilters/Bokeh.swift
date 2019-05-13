@@ -39,10 +39,10 @@ class MaskedVariableHexagonalBokeh: MaskedVariableCircularBokeh
 
 class MaskedVariableCircularBokeh: CIFilter
 {
-    var inputImage: CIImage?
-    var inputBokehMask: CIImage?
-    var inputMaxBokehRadius: CGFloat = 20
-    var inputBlurRadius: CGFloat = 2
+    @objc var inputImage: CIImage?
+    @objc var inputBokehMask: CIImage?
+    @objc var inputMaxBokehRadius: CGFloat = 20
+    @objc var inputBlurRadius: CGFloat = 2
     
     override var attributes: [String : Any]
     {

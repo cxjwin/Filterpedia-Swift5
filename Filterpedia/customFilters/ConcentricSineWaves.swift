@@ -22,15 +22,15 @@ import CoreImage
 
 class ConcentricSineWaves: CIFilter
 {
-    var inputWidth: CGFloat = 40
-    var inputAmplitude: CGFloat = 80
-    var inputFrequency: CGFloat = 6
+    @objc var inputWidth: CGFloat = 40
+    @objc var inputAmplitude: CGFloat = 80
+    @objc var inputFrequency: CGFloat = 6
     
-    var inputColor0 = CIColor(red: 0.6, green: 0.6, blue: 0.1)
-    var inputColor1 = CIColor(red: 0.1, green: 0.1, blue: 0.8)
+    @objc var inputColor0 = CIColor(red: 0.6, green: 0.6, blue: 0.1)
+    @objc var inputColor1 = CIColor(red: 0.1, green: 0.1, blue: 0.8)
     
-    var inputSize = CIVector(x: 640, y: 640)
-    var inputCenter = CIVector(x: 320, y: 320)
+    @objc var inputSize = CIVector(x: 640, y: 640)
+    @objc var inputCenter = CIVector(x: 320, y: 320)
     
     override func setDefaults()
     {

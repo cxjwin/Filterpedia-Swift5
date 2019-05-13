@@ -12,11 +12,11 @@ import CoreImage
 
 class VHSTrackingLines: CIFilter
 {
-    var inputImage: CIImage?
-    var inputTime: CGFloat = 0
-    var inputSpacing: CGFloat = 50
-    var inputStripeHeight: CGFloat = 0.5
-    var inputBackgroundNoise: CGFloat = 0.05
+    @objc var inputImage: CIImage?
+    @objc var inputTime: CGFloat = 0
+    @objc var inputSpacing: CGFloat = 50
+    @objc var inputStripeHeight: CGFloat = 0.5
+    @objc var inputBackgroundNoise: CGFloat = 0.05
     
     override func setDefaults()
     {
@@ -110,10 +110,10 @@ class VHSTrackingLines: CIFilter
 
 class CRTFilter: CIFilter
 {
-    var inputImage : CIImage?
-    var inputPixelWidth: CGFloat = 8
-    var inputPixelHeight: CGFloat = 12
-    var inputBend: CGFloat = 3.2
+    @objc var inputImage : CIImage?
+    @objc var inputPixelWidth: CGFloat = 8
+    @objc var inputPixelHeight: CGFloat = 12
+    @objc var inputBend: CGFloat = 3.2
     
     override var attributes: [String : Any]
     {
@@ -186,10 +186,10 @@ class CRTFilter: CIFilter
     
     class CRTColorFilter: CIFilter
     {
-        var inputImage : CIImage?
+        @objc var inputImage : CIImage?
         
-        var pixelWidth: CGFloat = 8.0
-        var pixelHeight: CGFloat = 12.0
+        @objc var pixelWidth: CGFloat = 8.0
+        @objc var pixelHeight: CGFloat = 12.0
         
         let crtColorKernel = CIColorKernel(source:
             "kernel vec4 crtColor(__sample image, float pixelWidth, float pixelHeight) \n" +
@@ -224,8 +224,8 @@ class CRTFilter: CIFilter
     
     class CRTWarpFilter: CIFilter
     {
-        var inputImage : CIImage?
-        var bend: CGFloat = 3.2
+        @objc var inputImage : CIImage?
+        @objc var bend: CGFloat = 3.2
         
         let crtWarpKernel = CIWarpKernel(source:
             "kernel vec2 crtWarp(vec2 extent, float bend)" +

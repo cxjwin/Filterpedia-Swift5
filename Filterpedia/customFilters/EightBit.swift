@@ -22,9 +22,9 @@ import CoreImage
 
 class EightBit: CIFilter
 {
-    var inputImage: CIImage?
-    var inputPaletteIndex: CGFloat = 4
-    var inputScale: CGFloat = 8
+    @objc var inputImage: CIImage?
+    @objc var inputPaletteIndex: CGFloat = 4
+    @objc var inputScale: CGFloat = 8
     
     override func setDefaults()
     {

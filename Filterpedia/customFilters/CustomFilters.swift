@@ -663,15 +663,15 @@ class CustomFiltersVendor: NSObject, CIFilterConstructor
 
 class PseudoColor: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputSmoothness = CGFloat(0.5)
+    @objc var inputSmoothness = CGFloat(0.5)
     
-    var inputColor0 = CIColor(red: 1, green: 0, blue: 1)
-    var inputColor1 = CIColor(red: 0, green: 0, blue: 1)
-    var inputColor2 = CIColor(red: 0, green: 1, blue: 0)
-    var inputColor3 = CIColor(red: 1, green: 0, blue: 1)
-    var inputColor4 = CIColor(red: 0, green: 1, blue: 1)
+    @objc var inputColor0 = CIColor(red: 1, green: 0, blue: 1)
+    @objc var inputColor1 = CIColor(red: 0, green: 0, blue: 1)
+    @objc var inputColor2 = CIColor(red: 0, green: 1, blue: 0)
+    @objc var inputColor3 = CIColor(red: 1, green: 0, blue: 1)
+    @objc var inputColor4 = CIColor(red: 0, green: 1, blue: 1)
     
     override var attributes: [String : Any]
     {
@@ -773,11 +773,11 @@ class PseudoColor: CIFilter
 
 class VintageVignette: CIFilter
 {
-    var inputImage : CIImage?
+    @objc var inputImage : CIImage?
     
-    var inputVignetteIntensity: CGFloat = 1
-    var inputVignetteRadius: CGFloat = 1
-    var inputSepiaToneIntensity: CGFloat = 1
+    @objc var inputVignetteIntensity: CGFloat = 1
+    @objc var inputVignetteRadius: CGFloat = 1
+    @objc var inputSepiaToneIntensity: CGFloat = 1
     
 override var attributes: [String : Any]
 {
@@ -850,9 +850,9 @@ override var attributes: [String : Any]
 
 class DifferenceOfGaussians: CIFilter
 {
-    var inputImage : CIImage?
-    var inputSigma0: CGFloat = 0.75
-    var inputSigma1: CGFloat = 3.25
+    @objc var inputImage : CIImage?
+    @objc var inputSigma0: CGFloat = 0.75
+    @objc var inputSigma1: CGFloat = 3.25
     
     override var attributes: [String : Any]
     {
@@ -939,12 +939,12 @@ class DifferenceOfGaussians: CIFilter
 
 class StarBurstFilter: CIFilter
 {
-    var inputImage : CIImage?
-    var inputThreshold: CGFloat = 0.9
-    var inputRadius: CGFloat = 20
-    var inputAngle: CGFloat = 0
-    var inputBeamCount: Int = 3
-    var inputStarburstBrightness: CGFloat = 0
+    @objc var inputImage : CIImage?
+    @objc var inputThreshold: CGFloat = 0.9
+    @objc var inputRadius: CGFloat = 20
+    @objc var inputAngle: CGFloat = 0
+    @objc var inputBeamCount: Int = 3
+    @objc var inputStarburstBrightness: CGFloat = 0
     
     let thresholdFilter = ThresholdToAlphaFilter()
     
@@ -981,7 +981,7 @@ class StarBurstFilter: CIFilter
                 kCIAttributeDisplayName: "Angle",
                 kCIAttributeMin: 0,
                 kCIAttributeSliderMin: 0,
-                kCIAttributeSliderMax: M_PI,
+                kCIAttributeSliderMax: Double.pi,
                 kCIAttributeType: kCIAttributeTypeScalar],
             
             "inputStarburstBrightness": [kCIAttributeIdentity: 0,
@@ -1084,12 +1084,12 @@ class ThresholdToAlphaFilter: ThresholdFilter
 
 class AdvancedMonochrome: CIFilter
 {
-    var inputImage : CIImage?
+    @objc var inputImage : CIImage?
     
-    var inputRedBalance: CGFloat = 1
-    var inputGreenBalance: CGFloat = 1
-    var inputBlueBalance: CGFloat = 1
-    var inputClamp: CGFloat = 0
+    @objc var inputRedBalance: CGFloat = 1
+    @objc var inputGreenBalance: CGFloat = 1
+    @objc var inputBlueBalance: CGFloat = 1
+    @objc var inputClamp: CGFloat = 0
     
     override var attributes: [String : Any]
     {
@@ -1169,9 +1169,9 @@ class AdvancedMonochrome: CIFilter
 
 class SmoothThreshold: CIFilter
 {
-    var inputImage : CIImage?
-    var inputEdgeO: CGFloat = 0.25
-    var inputEdge1: CGFloat = 0.75
+    @objc var inputImage : CIImage?
+    @objc var inputEdgeO: CGFloat = 0.25
+    @objc var inputEdge1: CGFloat = 0.75
     
     override var attributes: [String : Any]
     {
@@ -1231,8 +1231,8 @@ class SmoothThreshold: CIFilter
 
 class ThresholdFilter: CIFilter
 {
-    var inputImage : CIImage?
-    var inputThreshold: CGFloat = 0.75
+    @objc var inputImage : CIImage?
+    @objc var inputThreshold: CGFloat = 0.75
 
     override var attributes: [String : Any]
     {
@@ -1300,11 +1300,11 @@ class ThresholdFilter: CIFilter
 // based on https://github.com/BradLarson/GPUImage/blob/master/framework/Source/GPUImagePolarPixellateFilter.m
 class PolarPixellate: CIFilter
 {
-    var inputImage : CIImage?
-    var inputCenter = CIVector(x: 320, y: 320)
+    @objc var inputImage : CIImage?
+    @objc var inputCenter = CIVector(x: 320, y: 320)
     
-    var inputPixelArc = CGFloat(Double.pi / 15)
-    var inputPixelLength = CGFloat(50)
+    @objc var inputPixelArc = CGFloat(Double.pi / 15)
+    @objc var inputPixelLength = CGFloat(50)
     
     override var attributes: [String : Any]
     {
@@ -1317,11 +1317,11 @@ class PolarPixellate: CIFilter
             
             "inputPixelArc": [kCIAttributeIdentity: 0,
                 kCIAttributeClass: "NSNumber",
-                kCIAttributeDefault: CGFloat(M_PI / 15),
+                kCIAttributeDefault: CGFloat(Double.pi / 15),
                 kCIAttributeDisplayName: "Pixel Arc",
                 kCIAttributeMin: 0,
                 kCIAttributeSliderMin: 0,
-                kCIAttributeSliderMax: CGFloat(M_PI),
+                kCIAttributeSliderMax: CGFloat(Double.pi),
                 kCIAttributeType: kCIAttributeTypeScalar],
             
             "inputPixelLength": [kCIAttributeIdentity: 0,
@@ -1389,10 +1389,10 @@ class PolarPixellate: CIFilter
 
 class VignetteNoirFilter: CIFilter
 {
-    var inputImage: CIImage?
-    var inputRadius: CGFloat = 1
-    var inputIntensity: CGFloat = 2
-    var inputEdgeBrightness: CGFloat = -0.3
+    @objc var inputImage: CIImage?
+    @objc var inputRadius: CGFloat = 1
+    @objc var inputIntensity: CGFloat = 2
+    @objc var inputEdgeBrightness: CGFloat = -0.3
     
     override var attributes: [String : Any]
     {
@@ -1468,8 +1468,8 @@ class VignetteNoirFilter: CIFilter
 /// NormalMapFilter - converts a bump map to a normal map
 class NormalMapFilter: CIFilter
 {
-    var inputImage: CIImage?
-    var inputContrast = CGFloat(2)
+    @objc var inputImage: CIImage?
+    @objc var inputContrast = CGFloat(2)
     
     override var attributes: [String : Any]
     {

@@ -23,7 +23,7 @@ import CoreImage
 
 class RefractedTextFilter: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     {
         didSet
         {

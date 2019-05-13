@@ -27,9 +27,9 @@ let tau = CGFloat(M_PI * 2)
 
 class RGBChannelCompositing: CIFilter
 {
-    var inputRedImage : CIImage?
-    var inputGreenImage : CIImage?
-    var inputBlueImage : CIImage?
+    @objc var inputRedImage : CIImage?
+    @objc var inputGreenImage : CIImage?
+    @objc var inputBlueImage : CIImage?
     
     let rgbChannelCompositingKernel = CIColorKernel(source:
         "kernel vec4 rgbChannelCompositing(__sample red, __sample green, __sample blue)" +
@@ -88,11 +88,11 @@ class RGBChannelCompositing: CIFilter
 /// ```
 class RGBChannelToneCurve: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputRedValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
-    var inputGreenValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
-    var inputBlueValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
+    @objc var inputRedValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
+    @objc var inputGreenValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
+    @objc var inputBlueValues = CIVector(values: [0.0, 0.25, 0.5, 0.75, 1.0], count: 5)
     
     let rgbChannelCompositing = RGBChannelCompositing()
     
@@ -182,16 +182,16 @@ class RGBChannelToneCurve: CIFilter
 
 class RGBChannelBrightnessAndContrast: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputRedBrightness: CGFloat = 0
-    var inputRedContrast: CGFloat = 1
+    @objc var inputRedBrightness: CGFloat = 0
+    @objc var inputRedContrast: CGFloat = 1
     
-    var inputGreenBrightness: CGFloat = 0
-    var inputGreenContrast: CGFloat = 1
+    @objc var inputGreenBrightness: CGFloat = 0
+    @objc var inputGreenContrast: CGFloat = 1
     
-    var inputBlueBrightness: CGFloat = 0
-    var inputBlueContrast: CGFloat = 1
+    @objc var inputBlueBrightness: CGFloat = 0
+    @objc var inputBlueContrast: CGFloat = 1
     
     let rgbChannelCompositing = RGBChannelCompositing()
     
@@ -309,10 +309,10 @@ class RGBChannelBrightnessAndContrast: CIFilter
 
 class ChromaticAberration: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputAngle: CGFloat = 0
-    var inputRadius: CGFloat = 2
+    @objc var inputAngle: CGFloat = 0
+    @objc var inputRadius: CGFloat = 2
     
     let rgbChannelCompositing = RGBChannelCompositing()
     
@@ -393,11 +393,11 @@ class ChromaticAberration: CIFilter
 
 class RGBChannelGaussianBlur: CIFilter
 {
-    var inputImage: CIImage?
+    @objc var inputImage: CIImage?
     
-    var inputRedRadius: CGFloat = 2
-    var inputGreenRadius: CGFloat = 4
-    var inputBlueRadius: CGFloat = 8
+    @objc var inputRedRadius: CGFloat = 2
+    @objc var inputGreenRadius: CGFloat = 4
+    @objc var inputBlueRadius: CGFloat = 8
     
     let rgbChannelCompositing = RGBChannelCompositing()
     

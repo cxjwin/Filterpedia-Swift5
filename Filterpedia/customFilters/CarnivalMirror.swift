@@ -22,13 +22,13 @@ import CoreImage
 
 class CarnivalMirror: CIFilter
 {
-    var inputImage : CIImage?
+    @objc var inputImage : CIImage?
     
-    var inputHorizontalWavelength: CGFloat = 10
-    var inputHorizontalAmount: CGFloat = 20
+    @objc var inputHorizontalWavelength: CGFloat = 10
+    @objc var inputHorizontalAmount: CGFloat = 20
     
-    var inputVerticalWavelength: CGFloat = 10
-    var inputVerticalAmount: CGFloat = 20
+    @objc var inputVerticalWavelength: CGFloat = 10
+    @objc var inputVerticalAmount: CGFloat = 20
     
     override func setDefaults()
     {

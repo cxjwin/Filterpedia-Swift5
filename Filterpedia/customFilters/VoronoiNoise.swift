@@ -10,11 +10,11 @@ import CoreImage
 
 class VoronoiNoise: CIFilter
 {
-    var inputSeed: CGFloat = 20
-    var inputSize: CGFloat = 60
-    var inputDensity: CGFloat = 0.75
-    var inputWidth: CGFloat = 640
-    var inputHeight: CGFloat = 640
+    @objc var inputSeed: CGFloat = 20
+    @objc var inputSize: CGFloat = 60
+    @objc var inputDensity: CGFloat = 0.75
+    @objc var inputWidth: CGFloat = 640
+    @objc var inputHeight: CGFloat = 640
     
     override var attributes: [String : Any]
     {

@@ -11,24 +11,24 @@ import CoreImage
 
 class Flame: CIFilter
 {
-    var inputTime: CGFloat = 1
+    @objc var inputTime: CGFloat = 1
     
-    var inputIterations: CGFloat = 5
-    var inputAnisotropy: CGFloat = 4 // 1.0 = fat, default = 5, 10.0 = thin
-    var inputEdgeDefinition: CGFloat = 20.0; // 5.0 = soft, 16.0 = default, 100 = sharp
-    var inputHotspotExponent: CGFloat = 4.0; // 1.0 - cold, 4.0 - default, 10 = hotspots!
-    var inputDensity: CGFloat = 1.0; // 0.5 -> 2.0 default 1.0
-    var inputStrength: CGFloat = 2.0; // 1.0 -> 5.0 default 2.0
+    @objc var inputIterations: CGFloat = 5
+    @objc var inputAnisotropy: CGFloat = 4 // 1.0 = fat, default = 5, 10.0 = thin
+    @objc var inputEdgeDefinition: CGFloat = 20.0; // 5.0 = soft, 16.0 = default, 100 = sharp
+    @objc var inputHotspotExponent: CGFloat = 4.0; // 1.0 - cold, 4.0 - default, 10 = hotspots!
+    @objc var inputDensity: CGFloat = 1.0; // 0.5 -> 2.0 default 1.0
+    @objc var inputStrength: CGFloat = 2.0; // 1.0 -> 5.0 default 2.0
     
-    var inputRedMultiplier: CGFloat = 1.5;
-    var inputRedExponent: CGFloat = 1.0;
-    var inputGreenMultiplier: CGFloat = 1.5;
-    var inputGreenExponent: CGFloat = 3.0;
-    var inputBlueMultiplier: CGFloat = 0.5;
-    var inputBlueExponent: CGFloat = 2.0;
+    @objc var inputRedMultiplier: CGFloat = 1.5;
+    @objc var inputRedExponent: CGFloat = 1.0;
+    @objc var inputGreenMultiplier: CGFloat = 1.5;
+    @objc var inputGreenExponent: CGFloat = 3.0;
+    @objc var inputBlueMultiplier: CGFloat = 0.5;
+    @objc var inputBlueExponent: CGFloat = 2.0;
     
-    var inputWidth: CGFloat = 640
-    var inputHeight: CGFloat = 640
+    @objc var inputWidth: CGFloat = 640
+    @objc var inputHeight: CGFloat = 640
     
     override var attributes: [String : Any]
     {

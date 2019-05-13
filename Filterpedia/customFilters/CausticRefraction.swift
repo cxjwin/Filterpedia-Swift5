@@ -13,10 +13,10 @@ import CoreImage
 
 class CausticNoise: CIFilter
 {
-  var inputTime: CGFloat = 1
-  var inputTileSize: CGFloat = 640
-  var inputWidth: CGFloat = 640
-  var inputHeight: CGFloat = 640
+  @objc var inputTime: CGFloat = 1
+  @objc var inputTileSize: CGFloat = 640
+  @objc var inputWidth: CGFloat = 640
+  @objc var inputHeight: CGFloat = 640
   
   override var attributes: [String : Any]
   {
@@ -101,13 +101,13 @@ class CausticNoise: CIFilter
 
 class CausticRefraction: CIFilter
 {
-    var inputImage: CIImage?
-    var inputRefractiveIndex: CGFloat = 4.0
-    var inputLensScale: CGFloat = 50
-    var inputLightingAmount: CGFloat = 1.5
-    var inputTime: CGFloat = 1
-    var inputTileSize: CGFloat = 640
-    var inputSoftening: CGFloat = 3
+    @objc var inputImage: CIImage?
+    @objc var inputRefractiveIndex: CGFloat = 4.0
+    @objc var inputLensScale: CGFloat = 50
+    @objc var inputLightingAmount: CGFloat = 1.5
+    @objc var inputTime: CGFloat = 1
+    @objc var inputTileSize: CGFloat = 640
+    @objc var inputSoftening: CGFloat = 3
     
     override var attributes: [String : Any]
     {

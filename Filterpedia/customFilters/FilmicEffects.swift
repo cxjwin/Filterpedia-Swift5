@@ -26,8 +26,8 @@ import CoreImage
 
 class BleachBypassFilter: CIFilter
 {
-    var inputImage : CIImage?
-    var inputAmount = CGFloat(1)
+    @objc var inputImage : CIImage?
+    @objc var inputAmount = CGFloat(1)
     
     override var attributes: [String : Any]
     {
@@ -89,8 +89,8 @@ class BleachBypassFilter: CIFilter
 
 class TechnicolorFilter: CIFilter
 {
-    var inputImage : CIImage?
-    var inputAmount = CGFloat(1)
+    @objc var inputImage : CIImage?
+    @objc var inputAmount = CGFloat(1)
     
     override var attributes: [String : Any]
     {

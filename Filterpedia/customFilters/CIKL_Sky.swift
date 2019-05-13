@@ -10,14 +10,14 @@ import CoreImage
 
 class SimpleSky: CIFilter
 {
-    var inputSunDiameter: CGFloat = 0.01
-    var inputAlbedo: CGFloat = 0.2
-    var inputSunAzimuth: CGFloat = 0.0
-    var inputSunAlitude: CGFloat = 1.0
-    var inputSkyDarkness: CGFloat = 1.25
-    var inputScattering: CGFloat = 10.0
-    var inputWidth: CGFloat = 640
-    var inputHeight: CGFloat = 640
+    @objc var inputSunDiameter: CGFloat = 0.01
+    @objc var inputAlbedo: CGFloat = 0.2
+    @objc var inputSunAzimuth: CGFloat = 0.0
+    @objc var inputSunAlitude: CGFloat = 1.0
+    @objc var inputSkyDarkness: CGFloat = 1.25
+    @objc var inputScattering: CGFloat = 10.0
+    @objc var inputWidth: CGFloat = 640
+    @objc var inputHeight: CGFloat = 640
     
     override var attributes: [String : Any]
     {
