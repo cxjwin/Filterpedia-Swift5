@@ -93,7 +93,7 @@ class FilterInputItemRenderer: UITableViewCell
         }
     }
  
-    private(set) var value: Any?
+    private(set) var value: AnyObject?
     {
         didSet
         {
@@ -316,5 +316,5 @@ class FilterInputItemRenderer: UITableViewCell
 
 protocol FilterInputItemRendererDelegate: class
 {
-    func filterInputItemRenderer(filterInputItemRenderer: FilterInputItemRenderer, didChangeValue: Any?, forKey: String?)
+    func filterInputItemRenderer(filterInputItemRenderer: FilterInputItemRenderer, didChangeValue: AnyObject?, forKey: String?)
 }
