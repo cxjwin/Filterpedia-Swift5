@@ -25,8 +25,9 @@ class FilterDetail: UIView
     let rect640x640 = CGRect(x: 0, y: 0, width: 640, height: 640)
     let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
     
-    let compositeOverBlackFilter = CompositeOverBlackFilter()
-    
+    let compositeOverBlackFilter = CompositeOverColorFilter()
+    let compositeOverWhiteFilter = CompositeOverColorFilter(UIColor.white)
+
     let shapeLayer: CAShapeLayer =
     {
         let layer = CAShapeLayer()
@@ -86,7 +87,7 @@ class FilterDetail: UIView
     {
         let imageView = UIImageView()
         
-        imageView.backgroundColor = UIColor.black
+        imageView.backgroundColor = UIColor.lightGray
         
         imageView.layer.borderColor = UIColor.gray.cgColor
         imageView.layer.borderWidth = 1
@@ -273,6 +274,15 @@ class FilterDetail: UIView
                 currentFilter.setValue(value, forKey: key)
             }
             
+            var useBlack = true
+            // handle CITextImageGenerator
+            if currentFilter.name == "CITextImageGenerator" {
+                useBlack = false
+                if currentFilter.value(forKey: "inputText") == nil {
+                    currentFilter.setValue("Hello World", forKey: "inputText")
+                }
+            }
+            
             let outputImage = currentFilter.outputImage!
             let finalImage: CGImage
   
@@ -294,14 +304,25 @@ class FilterDetail: UIView
             }
             else if outputImage.extent.width < 640 || outputImage.extent.height < 640
             {
-                // if a filter's output image is smaller than 640x640 (e.g. circular wrap or lenticular
-                // halo), composite the output over a black background)
-                
-                self.compositeOverBlackFilter.setValue(outputImage,
-                    forKey: kCIInputImageKey)
-                
-                finalImage = context.createCGImage(self.compositeOverBlackFilter.outputImage!,
-                                                   from: self.rect640x640)!
+                if useBlack {
+                    // if a filter's output image is smaller than 640x640 (e.g. circular wrap or lenticular
+                    // halo), composite the output over a black background)
+
+                    self.compositeOverBlackFilter.setValue(outputImage,
+                                                           forKey: kCIInputImageKey)
+                    
+                    finalImage = context.createCGImage(self.compositeOverBlackFilter.outputImage!,
+                                                       from: self.rect640x640)!
+                } else {
+                    // if a text filter's output image is smaller than 640x640 (e.g. circular wrap or lenticular
+                    // halo), composite the output over a white background)
+                    
+                    self.compositeOverWhiteFilter.setValue(outputImage,
+                                                           forKey: kCIInputImageKey)
+                    
+                    finalImage = context.createCGImage(self.compositeOverWhiteFilter.outputImage!,
+                                                       from: self.rect640x640)!
+                }
             }
             else
             {

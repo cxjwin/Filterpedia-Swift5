@@ -9,20 +9,30 @@
 import UIKit
 import CoreImage
 
-class CompositeOverBlackFilter: CIFilter
+class CompositeOverColorFilter: CIFilter
 {
-    let black: CIFilter
+    let color: CIFilter
     let composite: CIFilter
     
     @objc var inputImage : CIImage?
     
     override init()
     {
-        black = CIFilter(name: "CIConstantColorGenerator",
+        color = CIFilter(name: "CIConstantColorGenerator",
                          parameters: [kCIInputColorKey: CIColor(color: UIColor.black)])!
         
         composite = CIFilter(name: "CISourceAtopCompositing",
-                             parameters: [kCIInputBackgroundImageKey: black.outputImage!])!
+                             parameters: [kCIInputBackgroundImageKey: color.outputImage!])!
+        
+        super.init()
+    }
+    
+    init(_ uiColor: UIColor) {
+        color = CIFilter(name: "CIConstantColorGenerator",
+                         parameters: [kCIInputColorKey: CIColor(color: uiColor)])!
+        
+        composite = CIFilter(name: "CISourceAtopCompositing",
+                             parameters: [kCIInputBackgroundImageKey: color.outputImage!])!
         
         super.init()
     }

@@ -34,7 +34,7 @@ class RefractedTextFilter: CIFilter
         }
     }
     
-    var inputText: NSString = "Filterpedia"
+    @objc var inputText: NSString = "Filterpedia"
     {
         didSet
         {
@@ -42,14 +42,14 @@ class RefractedTextFilter: CIFilter
         }
     }
     
-    var inputRefractiveIndex: CGFloat = 4.0
-    var inputLensScale: CGFloat = 50
-    var inputLightingAmount: CGFloat = 1.5
+    @objc var inputRefractiveIndex: CGFloat = 4.0
+    @objc var inputLensScale: CGFloat = 50
+    @objc var inputLightingAmount: CGFloat = 1.5
     
-    var inputLensBlur: CGFloat = 0
-    var inputBackgroundBlur: CGFloat = 2
+    @objc var inputLensBlur: CGFloat = 0
+    @objc var inputBackgroundBlur: CGFloat = 2
     
-    var inputRadius: CGFloat = 15
+    @objc var inputRadius: CGFloat = 15
     {
         didSet
         {
