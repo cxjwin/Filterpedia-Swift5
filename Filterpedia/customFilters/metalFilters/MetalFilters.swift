@@ -484,3 +484,8 @@ class MetalFilter: CIFilter, MetalRenderable
 protocol MetalRenderable {
     
 }
+
+// Make All Filter For Metal
+//extension CIFilter: MetalRenderable {
+//    
+//}

@@ -270,11 +270,7 @@ class FilterDetail: UIView
             
             for (key, value) in self.filterParameterValues where currentFilter.inputKeys.contains(key)
             {
-                do {
-                    currentFilter.setValue(value, forKey: key)
-                } catch {
-                    print("Unexpected error: \(error).")
-                }
+                currentFilter.setValue(value, forKey: key)
             }
             
             let outputImage = currentFilter.outputImage!

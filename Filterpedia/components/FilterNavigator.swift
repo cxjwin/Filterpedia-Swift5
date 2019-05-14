@@ -194,7 +194,7 @@ extension FilterNavigator: UITableViewDelegate
 
 extension FilterNavigator: UITableViewDataSource
 {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func numberOfSections(in tableView: UITableView) -> Int
     {
         switch mode
         {
@@ -234,7 +234,7 @@ extension FilterNavigator: UITableViewDataSource
             }[indexPath.row]
         }
         
-        cell.textLabel?.text = filterName
+        cell.textLabel?.text = CIFilter.localizedName(forFilterName: filterName) ?? (CIFilter(name: filterName)?.attributes[kCIAttributeFilterDisplayName] as? String) ?? filterName
         
         return cell
     }

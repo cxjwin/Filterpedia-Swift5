@@ -63,7 +63,7 @@ class FilterInputItemRenderer: UITableViewCell
     weak var delegate: FilterInputItemRendererDelegate?
     private(set) var inputKey: String = ""
     
-    var detail: (inputKey: String, attribute: [String : Any], filterParameterValues: [String: Any]) = ("", [String: Any](), [String: Any]())
+    var detail: (inputKey: String, attribute: [String : AnyObject], filterParameterValues: [String: AnyObject]) = ("", [String: AnyObject](), [String: AnyObject]())
     {
         didSet
         {
@@ -74,9 +74,9 @@ class FilterInputItemRenderer: UITableViewCell
     }
    
     private var title: String = ""
-    private var filterParameterValues = [String: Any]()
+    private var filterParameterValues = [String: AnyObject]()
     
-    private(set) var attribute = [String : Any]()
+    private(set) var attribute = [String : AnyObject]()
     {
         didSet
         {
